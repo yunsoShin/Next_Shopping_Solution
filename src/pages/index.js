@@ -10,10 +10,11 @@ export default function Home() {
 
   return (
     <div>
-      {data.map((product, index) => (
+      {data.map((productInfo, index) => (
         <div key={index}>
-          <p>Store: {product.store}</p>
-          <p>Price: {product.price}</p>
+          <p>Store: {productInfo.store}</p>
+          <p>Price: {productInfo.price}</p>
+          <p>image: {productInfo.image}</p>
           <p>--------------------------------------------------</p>
         </div>
       ))}
