@@ -26,16 +26,39 @@ export default async (req, res) => {
     });
   });
 
-  const elementsText = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
-    const elementsName = Array.from(document.querySelectorAll('[class^="basicList_title__"]')).map(element => element.innerText);
-    const elementsPrice = Array.from(document.querySelectorAll('[class^="basicList_mall_area__"]')).map(element => element.innerText);
-    
-    return {elementsName, elementsPrice};
+  const elementsName = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
+    const Name = Array.from(document.querySelectorAll('[class^="basicList_title__"]')).map(element => element.innerText);
+    return Name;
   });
+  const elementsPrice = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
+    const Price = Array.from(document.querySelectorAll('[class^="basicList_mall_area__"]')).map(element => element.innerText);
+    return Price;
+  });
+  const elementsMinPrice = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
+    const minPrice = Array.from(document.querySelectorAll('[class^="price_price__"]')).map(element => element.innerText);  
+    return minPrice;
+  });
+  
+  console.log(elementsName[(elementsName.length-7)])
+  console.log(elementsMinPrice[(elementsName.length-7)])
+  console.log(elementsPrice[(elementsName.length-7)])
 
-  await browser.close();
+  const result = elementsName.map((name, index) => {
+    return {
+        name: name,
+        price: elementsPrice[index],
+        minPrice: elementsMinPrice[index]
+    }
+});
 
-  res.status(200).json({ text: elementsText });
+console.log(result);
+
+// This will close the browser
+await browser.close();
+
+// Send JSON response
+res.status(200).json(result);
+
 }
 
 

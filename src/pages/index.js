@@ -10,7 +10,13 @@ export default function Home() {
 
   return (
     <div>
-    hi
-  </div>
+      {data.map((item, index) => (
+        <div key={index}>
+          <p>Name: {item.name}</p>
+          <p>Price: {item.price}</p>
+          <p>Min Price: {item.minPrice}</p>
+        </div>
+      ))}
+    </div>
   );
 }
