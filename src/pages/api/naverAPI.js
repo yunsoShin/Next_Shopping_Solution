@@ -51,7 +51,7 @@ export default async (req, res) => {
     }
 });
 
-console.log(result);
+
 
 // This will close the browser
 await browser.close();
