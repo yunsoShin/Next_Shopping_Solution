@@ -10,8 +10,7 @@ export default function Home() {
 
   return (
     <div>
-      <p>{data.text}</p>
-      
-    </div>
+    hi
+  </div>
   );
 }

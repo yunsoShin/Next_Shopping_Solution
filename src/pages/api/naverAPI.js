@@ -1,6 +1,3 @@
-import axios from 'axios';
-import cheerio from 'cheerio'
-
 import puppeteer from 'puppeteer';
 
 export default async (req, res) => {
@@ -29,15 +26,18 @@ export default async (req, res) => {
     });
   });
 
-  const elementsText = await page.evaluate(() => {
-    const elements = document.querySelectorAll('[class^="basicList_title__"]');
-    return Array.from(elements).map(element => element.innerText);
+  const elementsText = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
+    const elementsName = Array.from(document.querySelectorAll('[class^="basicList_title__"]')).map(element => element.innerText);
+    const elementsPrice = Array.from(document.querySelectorAll('[class^="basicList_mall_area__"]')).map(element => element.innerText);
+    
+    return {elementsName, elementsPrice};
   });
 
   await browser.close();
 
   res.status(200).json({ text: elementsText });
 }
+
 
 
 
