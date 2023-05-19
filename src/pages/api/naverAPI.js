@@ -1,12 +1,19 @@
 import puppeteer from 'puppeteer';
 import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
 
+let url = '';
+function UpdateURL({keyword,pageIndex}){
+  url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
+  &pagingIndex=${pageIndex}
+  &pagingSize=40&productSet=total&query=${keyword}
+  &sort=rel&timestamp=&viewType=list​`
+}
 
 
 export default async (req, res) => {
-  const url=`https://search.shopping.naver.com/search/all?query=${keyword}`
-//https://search.shopping.naver.com/search/all?origQuery=모션데스크pagingIndex=2
-//https://search.shopping.naver.com/search/all?origQuery=${검색어}&pagingIndex=${검색페이지}&pagingSize=40&productSet=total&query=${검색어}&sort=rel&timestamp=&viewType=list
+  let url = 'https://search.shopping.naver.com/search/all?query=%ED%82%A5%EB%B3%B4%EB%93%9C&cat_id=&frm=NVSHATC';
+
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -49,17 +56,16 @@ export default async (req, res) => {
 
 
 
-    const result = elementsName.map((name, index) => {
-      const MallPrice =normalizeMallPrice(elementsPrice[index])
-      const MinPrice = normalizeMinPrice(elementsMinPrice[index])
-      
-      return {
-          name: name,
-          mallPrice: MallPrice,
-          MinPrice: MinPrice,
-          Link: elementsLink[index]
-      }
-  });
+  const result = elementsName.map((name, index) => {
+    const MallPrice =normalizeMallPrice(elementsPrice[index])
+    const MinPrice = normalizeMinPrice(elementsMinPrice[index])
+    return {
+        name: name,
+        mallPrice: MallPrice,
+        MinPrice: MinPrice,
+        Link: elementsLink[index]
+    }
+});
 
 
 
@@ -72,5 +78,47 @@ res.status(200).json(result);
 }
 
 
+
+
+
+
+
+
+
+
+{/*
+
+export default async (req, res) => {
+  const url = 'https://search.shopping.naver.com/search/all?query=%ED%82%A5%EB%B3%B4%EB%93%9C&cat_id=&frm=NVSHATC'; // 크롤링하려는 웹사이트 URL
+  const { data } = await axios.get(url);
+
+  const $ = cheerio.load(data); // HTML 문서 로드
+  const contentText = $('#content').text(); // id가 "content"인 div의 모든 텍스트 추출
+
+  res.status(200).json({ text: contentText }); // 추출한 텍스트를 JSON 형식으로 반환
+}
+
+*/}
+
+
+
+{/*import puppeteer from 'puppeteer';
+
+export default async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto('https://search.shopping.naver.com/search/all?query=%ED%82%A5%EB%B3%B4%EB%93%9C&cat_id=&frm=NVSHATC');
+
+  const content = await page.evaluate(() => {
+    const el = document.querySelector('#content');
+    return el ? el.innerText : '';
+  });
+
+  await browser.close();
+
+  res.status(200).json({ content });
+};
+*/}
 
 
