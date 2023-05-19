@@ -38,16 +38,17 @@ export default async (req, res) => {
     const minPrice = Array.from(document.querySelectorAll('[class^="price_price__"]')).map(element => element.innerText);  
     return minPrice;
   });
-  
-  console.log(elementsName[(elementsName.length-7)])
-  console.log(elementsMinPrice[(elementsName.length-7)])
-  console.log(elementsPrice[(elementsName.length-7)])
+  const elementsLink = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
+    const productLink = Array.from(document.querySelectorAll('[class^="thumbnail_thumb__"]')).map(element => element.href);  
+    return productLink;
+  });
 
   const result = elementsName.map((name, index) => {
     return {
         name: name,
         price: elementsPrice[index],
-        minPrice: elementsMinPrice[index]
+        minPrice: elementsMinPrice[index],
+        Link: elementsLink[index]
     }
 });
 

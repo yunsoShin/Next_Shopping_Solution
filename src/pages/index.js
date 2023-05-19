@@ -1,24 +1,10 @@
 import useSWR from 'swr';
 import { normalizeData } from '../utils/normalizeData';
-
+import Link from 'next/link';
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default function Home() {
   const { data, error } = useSWR('/api/naverAPI', fetcher);
-
-  const normalizeData = (text) => {
-    let allowedShops = ["쿠팡", "지마켓", "11번가","옥션","11번가","SSG"]; 
-    text.split(" ");
-    
-
-    return text
-        
-    
-    ;
-  }
-  
-//...
-
 
 
   if (error) return <div>Failed to load</div>;
@@ -30,10 +16,15 @@ export default function Home() {
     <div>
       {data.map((item, index) => (
         <div key={index}>
-          <p>Name: {item.name}</p>
-          <p>Price: {normalizeData(item.price)}</p>
+          <Link href={item.Link}><p>Name: {item.name}</p></Link>
+          <div>
+            {Object.entries(normalizeData(item.price)).map(([shop, price]) => (
+              <p key={shop}>{shop}: {price}</p>
+            ))}
+          </div>
           <p>Min Price: {item.minPrice}</p>
           <p>-----------------------------------------------</p>
+          
         </div>
       ))}
     </div>
