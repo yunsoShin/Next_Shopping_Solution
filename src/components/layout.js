@@ -1,10 +1,10 @@
 import Link from 'next/link'
-
+import ProductList from './productList'
 import Search from './searchKeyword'
 export default function Layout(){
   return (
     <div>
-      <Search></Search>
+      <ProductList></ProductList>
     </div>
   )
 }

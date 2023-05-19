@@ -1,13 +1,10 @@
 import puppeteer from 'puppeteer';
 import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
 
-let url =''
 
-function URLupdate(keyword){
-  url=`https://search.shopping.naver.com/search/all?query=${keyword}`;
-}
 
 export default async (req, res) => {
+  const url=`https://search.shopping.naver.com/search/all?query=${keyword}`
 //https://search.shopping.naver.com/search/all?origQuery=모션데스크pagingIndex=2
 //https://search.shopping.naver.com/search/all?origQuery=${검색어}&pagingIndex=${검색페이지}&pagingSize=40&productSet=total&query=${검색어}&sort=rel&timestamp=&viewType=list
   const browser = await puppeteer.launch();
