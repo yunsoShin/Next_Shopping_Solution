@@ -36,13 +36,26 @@ const StyledButton = styled.button`
   }
 `;
 
-function searchKeyword(props) {
+const fetcher = url => fetch(url).then(res => res.json());
 
+function searchKeyword(props) {
+  
   const [searchWord,setSearchWord]=useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     
-  }
+    try {
+      const response = await fetch('/api/naverAPI');
+      if (!response.ok) {
+        throw new Error('Failed to fetch API');
+      }
+      const data = await response.json();
+      // 데이터 처리 로직 추가
+    } catch (error) {
+      console.error(error);
+      // 에러 처리 로직 추가
+    }
+  };
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   }
