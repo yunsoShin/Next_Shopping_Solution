@@ -1,26 +1,65 @@
 import React from 'react';
 import { useState } from 'react';
+import { styled } from 'styled-components';
 
+const StyledForm = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+`;
+
+const StyledInput = styled.input`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 350px;
+  
+`;
+
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  border: none;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
 
 function searchKeyword(props) {
 
-  const [keyword,setKeyword]=useState('');
+  const [searchWord,setSearchWord]=useState('');
 
+  const handleSubmit = () => {
+    
+  }
   const handleSearchChange = (event) => {
-    setKeyword(event.target.value);
+    setSearch(event.target.value);
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <StyledForm>
+      <StyledInput
         type="text"
         placeholder="검색어를 입력하세요."
-        value={searchTerm}
-        onChange={e => setKeyword(e.target.value)}
+        value={searchWord}
+        onChange={e => setSearchWord(e.target.value)}
       />
-      <button type="submit">검색</button>
-    </form>
+      <StyledButton type="submit">검색</StyledButton>
+    </StyledForm>
   );
 }
+
+
 
 export default searchKeyword;
