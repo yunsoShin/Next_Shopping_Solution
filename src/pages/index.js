@@ -16,7 +16,7 @@ export default function Home() {
     <div>
       {data.map((item, index) => (
         <div key={index}>
-          <Link href={item.Link}><p>Name: {item.name}</p></Link>
+          <a href={item.Link} target='_blank' rel="noopener noreferrer" ><p>Name: {item.name}</p></a>
           <div>
             {Object.entries(normalizeData(item.price)).map(([shop, price]) => (
               <p key={shop}>{shop}: {price}</p>

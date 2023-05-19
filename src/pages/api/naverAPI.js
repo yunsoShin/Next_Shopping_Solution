@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import { normalizeData } from '../../utils/normalizeData';
 
 export default async (req, res) => {
   const url = 'https://search.shopping.naver.com/search/all?query=%ED%82%A5%EB%B3%B4%EB%93%9C&cat_id=&frm=NVSHATC';
@@ -42,6 +43,8 @@ export default async (req, res) => {
     const productLink = Array.from(document.querySelectorAll('[class^="thumbnail_thumb__"]')).map(element => element.href);  
     return productLink;
   });
+
+
 
   const result = elementsName.map((name, index) => {
     return {
