@@ -1,5 +1,5 @@
 
-export const normalizeData = (text) => {
+export const normalizeMallPrice = (text) => {
   let allowedShops = ["쿠팡", "G마켓", "11번가","옥션","SSG닷컴"]; 
   let words = text.split("\n");
   let shopPrice={};
@@ -12,6 +12,17 @@ export const normalizeData = (text) => {
   }
   
   return shopPrice;
+      
+  
+  ;
+}
+
+
+export const normalizeMinPrice = (text) => {
+  
+  let MinPrice = parseInt(text.replace(/[^0-9]/g, ''));
+
+  return MinPrice;
       
   
   ;

@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { normalizeData } from '../../utils/normalizeData';
+import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
 
 export default async (req, res) => {
   const url = 'https://search.shopping.naver.com/search/all?query=%ED%82%A5%EB%B3%B4%EB%93%9C&cat_id=&frm=NVSHATC';
@@ -47,10 +47,12 @@ export default async (req, res) => {
 
 
   const result = elementsName.map((name, index) => {
+    const MallPrice =normalizeMallPrice(elementsPrice[index])
+    const MinPrice = normalizeMinPrice(elementsMinPrice[index])
     return {
         name: name,
-        price: elementsPrice[index],
-        minPrice: elementsMinPrice[index],
+        mallPrice: MallPrice,
+        MinPrice: MinPrice,
         Link: elementsLink[index]
     }
 });
