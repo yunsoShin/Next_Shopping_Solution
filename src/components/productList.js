@@ -8,7 +8,7 @@ const fetcher = url => fetch(url).then(res => res.json());
 
 
 
-function ProductList({ search }) {
+export function ProductList({ search }) {
   const { data, error } = useSWR(search ? `/api/${search}` : null, fetcher);
 
   if (error) return <div>Failed to load</div>;
@@ -19,17 +19,6 @@ function ProductList({ search }) {
       {data.map((item, index) => (
         <ProductItem key={index} item={item} />
       ))}
-    </div>
-  );
-}
-
-export default function ProductSearchPage() {
-  const [search, setSearch] = useState('');
-
-  return (
-    <div>
-      <SearchForm onSubmit={setSearch} />
-      <ProductList search={search} />
     </div>
   );
 }
