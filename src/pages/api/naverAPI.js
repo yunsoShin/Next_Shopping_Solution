@@ -1,7 +1,5 @@
 import puppeteer from 'puppeteer-core';
 import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
-import { GlobalContext } from '../_app';
-import { useContext } from 'react';
 
 
 export function UpdateURL(keyword){
@@ -14,7 +12,7 @@ export function UpdateURL(keyword){
 
 
 export default async (req, res) => {
-  const keywords = useContext(GlobalContext)
+
   const url = UpdateURL(keywords)
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
