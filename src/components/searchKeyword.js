@@ -1,6 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState , useContext } from 'react';
 import { styled } from 'styled-components';
+import { GlobalContext } from '../pages/_app';
+
+
 
 const StyledForm = styled.form`
   display: flex;
@@ -36,25 +39,18 @@ const StyledButton = styled.button`
   }
 `;
 
-const fetcher = url => fetch(url).then(res => res.json());
+
 
 function searchKeyword(props) {
+  const { globalValue, setGlobalValue } = useContext(GlobalContext);
   
   const [searchWord,setSearchWord]=useState('');
 
   const handleSubmit = async () => {
+    event.preventDefault();
+    setGlobalValue(searchValue); // 전역변수 업데이트
+    setSearchValue(''); // 검색어 값 초기화
     
-    try {
-      const response = await fetch('/api/naverAPI');
-      if (!response.ok) {
-        throw new Error('Failed to fetch API');
-      }
-      const data = await response.json();
-      // 데이터 처리 로직 추가
-    } catch (error) {
-      console.error(error);
-      // 에러 처리 로직 추가
-    }
   };
   const handleSearchChange = (event) => {
     setSearch(event.target.value);

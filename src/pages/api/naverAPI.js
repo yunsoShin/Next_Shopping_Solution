@@ -1,19 +1,21 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
+import { GlobalContext } from '../_app';
+import { useContext } from 'react';
 
-let url = '';
-function UpdateURL({keyword,pageIndex}){
-  url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
-  &pagingIndex=${pageIndex}
+
+export function UpdateURL(keyword){
+  const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
+  &pagingIndex=1
   &pagingSize=40&productSet=total&query=${keyword}
   &sort=rel&timestamp=&viewType=list​`
+  return url;
 }
 
 
 export default async (req, res) => {
-  let url = 'https://search.shopping.naver.com/search/all?query=%ED%82%A5%EB%B3%B4%EB%93%9C&cat_id=&frm=NVSHATC';
-
-
+  const keywords = useContext(GlobalContext)
+  const url = UpdateURL(keywords)
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
