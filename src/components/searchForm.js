@@ -1,14 +1,8 @@
-import { useContext } from 'react';
-
-function SearchForm() {
-
-  
+export function SearchForm({ onSubmit }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { value } = event.target.elements.searchInput;
-
-
-    console.log(globalValue)
+    onSubmit(value);
   };
 
   return (
@@ -18,5 +12,3 @@ function SearchForm() {
     </form>
   );
 }
-
-export default SearchForm;
