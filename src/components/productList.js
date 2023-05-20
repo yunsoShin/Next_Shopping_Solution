@@ -1,18 +1,37 @@
 import useSWR from 'swr';
-
+import { useState } from 'react';
 
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default function productList() {
-  const { data, error } = useSWR('/api/naverAPI', fetcher);
+  const [search, setSearch] = useState('');
+  const { data, error } = useSWR(search ? `/api/${search}` : null, fetcher);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { value } = event.target.elements.searchInput;
+    setSearch(value);
+  };
+
   if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  
+  if (!data) return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input name="searchInput" type="text" />
+        <button type="submit">검색</button>
+      </form>
+    </div>
+  );
+
   return (
     <div>
-      {data.map((item, index) => (
-        
+      <form onSubmit={handleSubmit}>
+        <input name="searchInput" type="text" />
+        <button type="submit">검색</button>
+      </form>
+      {data.map((item, index) => (        
         <div key={index}>
-          
           <a href={item.Link} target='_blank' rel="noopener noreferrer" ><p>Name: {item.name}</p></a>
           <div>
             {Object.entries(item.mallPrice).map(([shop, price]) => (
@@ -21,12 +40,12 @@ export default function productList() {
           </div>
           <p>Min Price: {item.MinPrice} 원</p>
           <p>-----------------------------------------------</p>
-          
         </div>
       ))}
     </div>
   );
 }
+
 
 
 
