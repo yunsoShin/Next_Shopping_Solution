@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
+import { DataProcessingMallPrice , DataProcessingMinPrice } from '../../utils/dataProcessing';
 
 
 export function UpdateURL(keyword){
@@ -57,11 +57,15 @@ export default async (req, res) => {
 
 
   const result = elementsName.map((name, index) => {
-    const MallPrice =normalizeMallPrice(elementsPrice[index])
-    const MinPrice = normalizeMinPrice(elementsMinPrice[index])
+    const MallPrice =DataProcessingMallPrice(elementsPrice[index])
+    const MinPrice = DataProcessingMinPrice(elementsMinPrice[index])
+    const filteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
+      return price > (MinPrice * 1.2)+3000;
+    });
+
     return {
         name: name,
-        mallPrice: MallPrice,
+        mallPrice: filteredPrices,
         MinPrice: MinPrice,
         Link: elementsLink[index]
     }

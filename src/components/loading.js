@@ -1,6 +1,6 @@
 import React from 'react';
 
-function isLaoding(props) {
+function Loading(props) {
   return (
     <div>
       로딩중
@@ -8,4 +8,4 @@ function isLaoding(props) {
   );
 }
 
-export default isLaoding;
+export default Loading;

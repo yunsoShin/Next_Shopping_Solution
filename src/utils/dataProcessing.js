@@ -1,5 +1,5 @@
 
-export const normalizeMallPrice = (text) => {
+export const DataProcessingMallPrice = (text) => {
   let allowedShops = ["쿠팡", "G마켓", "11번가", "옥션", "SSG닷컴"];
   let words = text.split("\n");
   let shopPrice = {};
@@ -19,16 +19,13 @@ export const normalizeMallPrice = (text) => {
 
 
 
-export const normalizeMinPrice = (text) => {
-
+export const DataProcessingMinPrice = (text) => {
   if (!text) {
-    return 0; // or whatever default value you want
+    return null; // or return a different default value if needed
   }
 
-  let MinPrice = parseInt(text.replace(/[^0-9]/g, ''));
+  let MinPrice = text.replace(/[^0-9]/g, '');
+  MinPrice = parseInt(MinPrice, 10);
 
   return MinPrice;
-      
-  
-  ;
-}
+};

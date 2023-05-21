@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer-core';
-import { normalizeMallPrice , normalizeMinPrice } from '../../utils/normalizeData';
+import { normalizeMallPrice , normalizeMinPrice } from '../../utils/dataProcessing';
 
 
 export function UpdateURL(keyword){
@@ -28,7 +28,6 @@ export default async (req, res) => {
         const scrollHeight = document.body.scrollHeight;
         window.scrollBy(0, distance);
         totalHeight += distance;
-
         if (totalHeight >= scrollHeight){
           clearInterval(timer);
           resolve();
@@ -59,6 +58,9 @@ export default async (req, res) => {
   const result = elementsName.map((name, index) => {
     const MallPrice =normalizeMallPrice(elementsPrice[index])
     const MinPrice = normalizeMinPrice(elementsMinPrice[index])
+    
+    
+
     return {
         name: name,
         mallPrice: MallPrice,

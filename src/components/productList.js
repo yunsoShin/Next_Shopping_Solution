@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { ProductItem } from './productItem';
 import { SearchForm } from './searchForm';
-
+import Loading from './loading';
 const fetcher = url => fetch(url).then(res => res.json());
 
 
@@ -15,7 +15,7 @@ export function ProductList({ search }) {
     if (!search) {
       return <div>Start your search!</div> // Prompt the user to start a search
     } else {
-      return <div>Loading...</div> // Show loading message
+      return <div><Loading /></div>  // Show loading message
     }
   }
   
