@@ -2,14 +2,6 @@ import puppeteer from 'puppeteer';
 import { DataProcessingMallPrice , DataProcessingMinPrice } from '../../utils/dataProcessing';
 
 
-export function UpdateURL(keyword){
-  const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
-  &pagingIndex=1
-  &pagingSize=40&productSet=total&query=${keyword}
-  &sort=rel&timestamp=&viewType=list​`
-  return url;
-}
-
 
 export default async (req, res) => {
   const keyword=req.query.id;
@@ -49,7 +41,7 @@ export default async (req, res) => {
     const minPrice = Array.from(document.querySelectorAll('[class^="price_price__"]')).map(element => element.innerText);  
     return minPrice;
   });
-  const elementsLink = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
+  const elementsLink = await page.evaluate(() => { //모든요소를 가져와 맵으로 href만추출하는 로직,
     const productLink = Array.from(document.querySelectorAll('[class^="thumbnail_thumb__"]')).map(element => element.href);  
     return productLink;
   });
@@ -82,3 +74,46 @@ res.status(200).json(result);
 }
 
 
+
+
+
+{/*
+import  cheerio  from 'cheerio';
+import axios from 'axios';
+
+export function UpdateURL(keyword){
+  const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
+  &pagingIndex=1
+  &pagingSize=40&productSet=total&query=${keyword}
+  &sort=rel&timestamp=&viewType=list​`
+  return url;
+}
+
+export default async (req, res) => {
+  const keyword = req.query.id;
+  const url = UpdateURL(keyword);
+  const {data} = await axios.get(url);
+
+  const $ = cheerio.load(data);
+
+  const elementsName = $('[class^="basicList_title__"]').map((index, element) => $(element).text()).get();
+  const elementsPrice = $('[class^="basicList_mall_area__"]').map((index, element) => $(element).text()).get();
+  const elementsMinPrice = $('[class^="price_price__"]').map((index, element) => $(element).text()).get();
+  const elementsLink = $('[class^="thumbnail_thumb__"]').map((index, element) => $(element).attr('href')).get();
+
+  const result = elementsName.map((name, index) => {
+    const MallPrice = DataProcessingMallPrice(elementsPrice[index]);
+    const MinPrice = DataProcessingMinPrice(elementsMinPrice[index]);
+
+    return {
+      name: name,
+      mallPrice: MallPrice,
+      MinPrice: MinPrice,
+      Link: elementsLink[index]
+    };
+  });
+
+  res.status(200).json(result);
+};
+
+*/}
