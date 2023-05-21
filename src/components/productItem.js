@@ -9,7 +9,7 @@ export function ProductItem({ item }) {
       </a>
       <div>
       {Object.entries(item.mallPrice).map(([shop, price]) => (
-          <p key={shop}>{shop}: {price} 원</p>
+          <p key={shop}> {price[0]}:{price[1]} 원</p>
         ))}
       </div>
       <p>Min Price: {item.MinPrice}원</p>

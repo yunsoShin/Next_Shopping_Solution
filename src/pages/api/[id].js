@@ -36,39 +36,36 @@ export default async (req, res) => {
     });
   });
 
-  const elementsName = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
-    const Name = Array.from(document.querySelectorAll('[class^="basicList_title__"]')).map(element => element.innerText);
-    return Name;
-  });
-  const elementsPrice = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
-    const Price = Array.from(document.querySelectorAll('[class^="basicList_mall_area__"]')).map(element => element.innerText);
-    return Price;
-  });
-  const elementsMinPrice = await page.evaluate(() => { //모든요소를 가져와 맵으로 text만추출하는 로직,
-    const minPrice = Array.from(document.querySelectorAll('[class^="price_price__"]')).map(element => element.innerText);  
-    return minPrice;
-  });
-  const elementsLink = await page.evaluate(() => { //모든요소를 가져와 맵으로 href만추출하는 로직,
-    const productLink = Array.from(document.querySelectorAll('[class^="thumbnail_thumb__"]')).map(element => element.href);  
-    return productLink;
-  });
-
-
-
-  const result = elementsName.map((name, index) => {
-    const MallPrice =DataProcessingMallPrice(elementsPrice[index])
-    const MinPrice = DataProcessingMinPrice(elementsMinPrice[index])
+  
+  const [elementsName, elementsPrice, elementsMinPrice, elementsLink] = await Promise.all([
+    page.evaluate(() => {const Name = Array.from(document.querySelectorAll('[class^="basicList_title__"]')).map(element => element.innerText);
+      return Name;}),
+    page.evaluate(() => {const Price = Array.from(document.querySelectorAll('[class^="basicList_mall_area__"]')).map(element => element.innerText);
+      return Price;}),
+    page.evaluate(() => { const minPrice = Array.from(document.querySelectorAll('[class^="price_price__"]')).map(element => element.innerText);  
+      return minPrice;}),
+    page.evaluate(() => {const productLink = Array.from(document.querySelectorAll('[class^="thumbnail_thumb__"]')).map(element => element.href);  
+      return productLink;}),
+  ]);
+  const result = elementsName.reduce((acc, name, index) => {
+    const MallPrice = DataProcessingMallPrice(elementsPrice[index]);
+    const MinPrice = DataProcessingMinPrice(elementsMinPrice[index]);
     const filteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
-      return price > (MinPrice * 1.2)+3000;
+      return price > (MinPrice * 1.2) + 3000;
     });
-
-    return {
+  
+    if (filteredPrices.length > 0) {
+      acc.push({
         name: name,
         mallPrice: filteredPrices,
         MinPrice: MinPrice,
-        Link: elementsLink[index]
+        Link: elementsLink[index],
+      });
     }
-});
+  
+    return acc;
+  }, []);
+  
 
 
 
