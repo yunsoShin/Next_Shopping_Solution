@@ -4,7 +4,7 @@ import { DataProcessingMallPrice , DataProcessingMinPrice } from '../../utils/da
 export function UpdateURL(keyword){
   const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
   &pagingIndex=1
-  &pagingSize=40&productSet=total&query=${keyword}
+  &pagingSize=80&productSet=total&query=${keyword}
   &sort=rel&timestamp=&viewType=list​`
   return url;
 }
@@ -51,7 +51,7 @@ export default async (req, res) => {
     const MallPrice = DataProcessingMallPrice(elementsPrice[index]);
     const MinPrice = DataProcessingMinPrice(elementsMinPrice[index]);
     const filteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
-      return price > (MinPrice * 1.2) + 3000;
+      return (price*90/100-MinPrice)*100 > 20;
     });
   
     if (filteredPrices.length > 0) {
