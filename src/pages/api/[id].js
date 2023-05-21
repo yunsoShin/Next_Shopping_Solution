@@ -1,6 +1,13 @@
 import puppeteer from 'puppeteer';
 import { DataProcessingMallPrice , DataProcessingMinPrice } from '../../utils/dataProcessing';
 
+export function UpdateURL(keyword){
+  const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
+  &pagingIndex=1
+  &pagingSize=40&productSet=total&query=${keyword}
+  &sort=rel&timestamp=&viewType=list​`
+  return url;
+}
 
 
 export default async (req, res) => {
@@ -77,7 +84,7 @@ res.status(200).json(result);
 
 
 
-{/*
+{/* cheerio를 통한 크롤링
 import  cheerio  from 'cheerio';
 import axios from 'axios';
 
