@@ -27,7 +27,6 @@ export default async (req, res) => {
         const scrollHeight = document.body.scrollHeight;
         window.scrollBy(0, distance);
         totalHeight += distance;
-
         if (totalHeight >= scrollHeight){
           clearInterval(timer);
           resolve();
@@ -53,7 +52,6 @@ export default async (req, res) => {
     const filteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
       return (price*90/100-MinPrice)*100 > 20;
     });
-  
     if (filteredPrices.length > 0) {
       acc.push({
         name: name,
