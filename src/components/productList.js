@@ -13,9 +13,16 @@ export function ProductList({ search }) {
     fetcher
   );
 
+  const { data: nextPageData } = useSWR(
+    search ? `/api/${search}?pageIndex=${pageIndex + 1}` : null,
+    fetcher,
+    { revalidateOnMount: false } // Don't revalidate on mount to prevent duplicate requests
+  );
+
   const handleNextBTN = () => {
     setPageIndex(pageIndex + 1);
   };
+
   useEffect(() => {
     if (search) {
       mutate();
@@ -32,13 +39,13 @@ export function ProductList({ search }) {
 
   if (!data) {
     if (!search) {
-      return <div>Start your search!</div>; // Prompt the user to start a search
+      return <div>Start your search!</div>;
     } else {
       return (
         <div>
           <Loading />
         </div>
-      ); // Show loading message
+      );
     }
   }
 
