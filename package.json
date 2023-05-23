@@ -23,5 +23,8 @@
     "styled-components": "^6.0.0-rc.1",
     "swr": "^2.1.5",
     "tailwindcss": "3.3.2"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^2.1.3"
   }
 }
