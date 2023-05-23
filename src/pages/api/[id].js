@@ -49,15 +49,20 @@ export default async (req, res) => {
   const result = elementsName.reduce((acc, name, index) => {
     const MallPrice = DataProcessingMallPrice(elementsPrice[index]);
     const MinPrice = DataProcessingMinPrice(elementsMinPrice[index]);
-    const filteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
-      return (price*90/100-MinPrice)*100 > 20;
+    const FilteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
+      return MinPrice*1.2+3000 < price
     });
-    if (filteredPrices.length > 0) {
+    const Profit = [FilteredPrices[0],FilteredPrices[1]-MinPrice-FilteredPrices[1]*0.1];
+    const ProfitPer = [FilteredPrices[0],Math.floor(FilteredPrices[1]-MinPrice-FilteredPrices[1]*0.1/FilteredPrices*100)];
+    if (FilteredPrices.length > 0) {
       acc.push({
         name: name,
-        mallPrice: filteredPrices,
+        mallPrice: FilteredPrices,
         MinPrice: MinPrice,
         Link: elementsLink[index],
+        ItemProfit:Profit,
+        ItemProfitPer:ProfitPer
+
       });
     }
   

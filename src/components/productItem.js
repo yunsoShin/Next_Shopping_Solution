@@ -40,7 +40,7 @@ export function ProductItem({ item }) {
       </div>
       <ItemPrice>Min Price: {item.MinPrice}원</ItemPrice>
       {Object.entries(item.mallPrice).map(([shop, price]) => (
-          <ItemProfit key={shop}> {price[0]}:{price[1]-item.MinPrice} 원 이익</ItemProfit>
+          <ItemProfit key={shop}> {price[0]}:{price[1]-item.MinPrice-price[1]*0.1}원 {Math.floor((price[1]-item.MinPrice-price[1]*0.1)/price[1]*100)}%⬆️, (수수료10%)</ItemProfit>
         ))}
       
 
