@@ -1,27 +1,30 @@
-import useSWR from 'swr';
-import { useState } from 'react';
-import { ProductItem } from './productItem';
-import { SearchForm } from './searchForm';
-import Loading from './loading';
-let pageIndex = 3;
+import useSWR from "swr";
+import { useState, useEffect } from "react";
+import { ProductItem } from "./productItem";
+import Loading from "./loading";
 
-
-const fetcher = url => fetch(url).then(res => res.json());
-
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export function ProductList({ search }) {
-  const { data, error } = useSWR(search ? `/api/${search}?pageIndex=${pageIndex}` : null, fetcher);
+  const [pageIndex, setPageIndex] = useState(1);
+  const { data, error, mutate } = useSWR(
+    search ? `/api/${search}?pageIndex=${pageIndex}` : null,
+    fetcher
+  );
 
   if (error) return <div>Failed to load</div>;
-    
-  if (!data){
+
+  if (!data) {
     if (!search) {
-      return <div>Start your search!</div> // Prompt the user to start a search
+      return <div>Start your search!</div>; // Prompt the user to start a search
     } else {
-      return <div><Loading /></div>  // Show loading message
+      return (
+        <div>
+          <Loading />
+        </div>
+      ); // Show loading message
     }
   }
-  
 
   return (
     <div>

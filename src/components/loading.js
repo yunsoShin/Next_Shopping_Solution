@@ -1,6 +1,6 @@
 // Loading.js
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Background = styled.div`
   position: absolute;
@@ -17,7 +17,7 @@ const Background = styled.div`
 `;
 
 const LoadingText = styled.div`
-  font: 1rem 'Noto Sans KR';
+  font: 1rem "Noto Sans KR";
   text-align: center;
 `;
 

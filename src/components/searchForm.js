@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const StyledForm = styled.form`
   display: flex;
@@ -20,7 +20,7 @@ const StyledInput = styled.input`
 const StyledButton = styled.button`
   padding: 10px 20px;
   border: none;
-  background-color: #4CAF50; /* Green */
+  background-color: #4caf50; /* Green */
   color: white;
   text-align: center;
   text-decoration: none;
