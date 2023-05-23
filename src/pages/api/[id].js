@@ -52,28 +52,23 @@ export default async (req, res) => {
     const FilteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
       return MinPrice*1.2+3000 < price
     });
-    const Profit = [FilteredPrices[0],FilteredPrices[1]-MinPrice-FilteredPrices[1]*0.1];
-    const ProfitPer = [FilteredPrices[0],Math.floor(FilteredPrices[1]-MinPrice-FilteredPrices[1]*0.1/FilteredPrices*100)];
+    
+    
+
     if (FilteredPrices.length > 0) {
       acc.push({
-        name: name,
-        mallPrice: FilteredPrices,
-        MinPrice: MinPrice,
-        Link: elementsLink[index],
-        ItemProfit:Profit,
-        ItemProfitPer:ProfitPer
-
-      });
-    }
+      name: name,
+      mallPrice: FilteredPrices,
+      MinPrice: MinPrice,
+      Link: elementsLink[index],
+      ItemProfit: FilteredPrices.map(([shop, price]) => [shop, price - MinPrice - price * 0.1]),
+      ItemProfitPer: FilteredPrices.map(([shop, price]) => [shop, Math.floor((price - MinPrice - price * 0.1) / price * 100)])
+  });
+}
   
     return acc;
   }, []);
   
-
-
-
-// This will close the browser
-await browser.close();
 
 // Send JSON response
 res.status(200).json(result);
