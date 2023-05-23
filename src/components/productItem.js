@@ -26,15 +26,13 @@ const ItemProfit = styled.p`
   display: flex;
   
 `;
-const ItemProfitBig = styled(ItemProfit)`
-  font-size: 1.2em; // 큰 글씨로 표시
-  color: red; // 색상 변경
-`;
+
+
+
 
 export function ProductItem({ item }) {
-  // Find the index of the shop with the highest profit percentage
-  const maxProfitIndex = item.ItemProfitPer.reduce((iMax, x, i, arr) => x[1] > arr[iMax][1] ? i : iMax, 0);
-
+  
+  
   return (
     <ItemContainer>
       <ItemLink href={item.Link} target='_blank' rel="noopener noreferrer">
@@ -47,10 +45,9 @@ export function ProductItem({ item }) {
       </div>
       <ItemPrice>Min Price: {item.MinPrice}원</ItemPrice>
       {item.ItemProfit.map(([shop, profit], index) => (
-        index === maxProfitIndex ? 
-        <ItemProfitBig key={shop}> {shop}:{profit}원 {item.ItemProfitPer[index][1]}%⬆️, (수수료10%)</ItemProfitBig> :
         <ItemProfit key={shop}> {shop}:{profit}원 {item.ItemProfitPer[index][1]}%⬆️, (수수료10%)</ItemProfit>
       ))}
+      
     </ItemContainer>
   );
 }

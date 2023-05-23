@@ -3,11 +3,14 @@ import { useState } from 'react';
 import { ProductItem } from './productItem';
 import { SearchForm } from './searchForm';
 import Loading from './loading';
+let pageIndex = 3;
+
+
 const fetcher = url => fetch(url).then(res => res.json());
 
 
 export function ProductList({ search }) {
-  const { data, error } = useSWR(search ? `/api/${search}` : null, fetcher);
+  const { data, error } = useSWR(search ? `/api/${search}?pageIndex=${pageIndex}` : null, fetcher);
 
   if (error) return <div>Failed to load</div>;
     

@@ -1,9 +1,9 @@
 import puppeteer from 'puppeteer';
 import { DataProcessingMallPrice , DataProcessingMinPrice } from '../../utils/dataProcessing';
 
-export function UpdateURL(keyword){
+export function UpdateURL(keyword,pageindex){
   const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
-  &pagingIndex=1
+  &pagingIndex=${pageindex}
   &pagingSize=80&productSet=total&query=${keyword}
   &sort=rel&timestamp=&viewType=list​`
   return url;
@@ -12,7 +12,8 @@ export function UpdateURL(keyword){
 
 export default async (req, res) => {
   const keyword=req.query.id;
-  const url = UpdateURL(keyword);
+  const pageIndex = Number(req.query.pageIndex || 1);
+  const url = UpdateURL(keyword,pageIndex);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
