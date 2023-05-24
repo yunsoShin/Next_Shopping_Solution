@@ -12,7 +12,7 @@ export function UpdateURL(keyword, pageindex) {
   return url;
 }
 
-async function PageScroll() {
+async function PageScroll(page) {
   await page.evaluate(async () => {
     await new Promise((resolve, reject) => {
       let totalHeight = 0;
@@ -40,8 +40,7 @@ export default async (req, res) => {
   await page.goto(url, { waitUntil: "networkidle0" });
 
   // Scroll to the bottom of the page
-  PageScroll();
-
+  PageScroll(page);
   const [elementsName, elementsPrice, elementsMinPrice, elementsLink] =
     await Promise.all([
       page.evaluate(() => {
