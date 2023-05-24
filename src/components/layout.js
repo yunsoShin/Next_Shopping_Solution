@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import Loading from "./loading";
 
 // Create a Title component that'll render an <h1> tag with some styles
 const Title = styled.h1`
