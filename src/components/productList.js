@@ -16,7 +16,6 @@ export function ProductList({ search }) {
   const handleNextBTN = () => {
     setPageIndex(pageIndex + 1);
   };
-
   useEffect(() => {
     if (search) {
       mutate();
@@ -33,9 +32,13 @@ export function ProductList({ search }) {
 
   if (!data) {
     if (!search) {
-      return <div>Start your search!</div>;
+      return <div>Start your search!</div>; // Prompt the user to start a search
     } else {
-      return <div>로딩컴포넌트</div>;
+      return (
+        <div>
+          <Loading />
+        </div>
+      ); // Show loading message
     }
   }
 
