@@ -12,7 +12,7 @@ const StyledForm = styled.form`
 const StyledInput = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
   font-size: 16px;
   width: 350px;
 `;
@@ -20,13 +20,14 @@ const StyledInput = styled.input`
 const StyledButton = styled.button`
   padding: 10px 20px;
   border: none;
-  background-color: #4caf50; /* Green */
+  background-color: blue; /* Green */
   color: white;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   transition-duration: 0.4s;
+  border-radius: 20px;
   cursor: pointer;
 
   &:hover {
