@@ -13,12 +13,6 @@ export function ProductList({ search }) {
     fetcher
   );
 
-  const { data: nextPageData } = useSWR(
-    search ? `/api/${search}?pageIndex=${pageIndex + 1}` : null,
-    fetcher,
-    { revalidateOnMount: false } // Don't revalidate on mount to prevent duplicate requests
-  );
-
   const handleNextBTN = () => {
     setPageIndex(pageIndex + 1);
   };

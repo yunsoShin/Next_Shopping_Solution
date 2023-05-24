@@ -20,12 +20,14 @@ const Wrapper = styled.section`
 export default function Layout() {
   return (
     <Wrapper>
-      <Title>
-        안녕하세요 최고의 만족도를 자랑하는 셀러 솔루션을 제공합니다
-      </Title>
-      <Link href="/productSearchPage" passHref>
-        상품검색하러가기
-      </Link>
+      <div>
+        <Title>
+          안녕하세요 최고의 만족도를 자랑하는 셀러 솔루션을 제공합니다
+        </Title>
+        <Link href="/productSearchPage" passHref>
+          상품검색하러가기
+        </Link>
+      </div>
     </Wrapper>
   );
 }

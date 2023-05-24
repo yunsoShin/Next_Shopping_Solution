@@ -16,7 +16,7 @@ export default async (req, res) => {
   const keyword = req.query.id;
   const pageIndex = Number(req.query.pageIndex || 1);
   const url = UpdateURL(keyword, pageIndex);
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   await page.goto(url, { waitUntil: "networkidle0" });
@@ -92,7 +92,6 @@ export default async (req, res) => {
     return acc;
   }, []);
 
-  const reduceResult = [...result];
   // Send JSON response
   res.status(200).json(result);
 };
