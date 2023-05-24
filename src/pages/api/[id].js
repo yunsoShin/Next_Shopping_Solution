@@ -42,25 +42,37 @@ export default async (req, res) => {
     await Promise.all([
       page.evaluate(() => {
         const Name = Array.from(
-          document.querySelectorAll('[class^="basicList_title__"]')
+          document.querySelectorAll(
+            '[class^="product_title__"]',
+            '[class^="basicList_title__"]'
+          )
         ).map((element) => element.innerText);
         return Name;
       }),
       page.evaluate(() => {
         const Price = Array.from(
-          document.querySelectorAll('[class^="basicList_mall_area__"]')
+          document.querySelectorAll(
+            '[class^="product_mall_area___"]',
+            '[class^="basicList_mall_area__"]'
+          )
         ).map((element) => element.innerText);
         return Price;
       }),
       page.evaluate(() => {
         const minPrice = Array.from(
-          document.querySelectorAll('[class^="price_price__"]')
+          document.querySelectorAll(
+            '[class^="price_num__"]',
+            '[class^="price_price__"]'
+          )
         ).map((element) => element.innerText);
         return minPrice;
       }),
       page.evaluate(() => {
         const productLink = Array.from(
-          document.querySelectorAll('[class^="thumbnail_thumb__"]')
+          document.querySelectorAll(
+            '[class^="product_link__"]',
+            '[class^="thumbnail_thumb__"]'
+          )
         ).map((element) => element.href);
         return productLink;
       }),
@@ -91,7 +103,7 @@ export default async (req, res) => {
 
     return acc;
   }, []);
-
+  await browser.close();
   // Send JSON response
   res.status(200).json(result);
 };
