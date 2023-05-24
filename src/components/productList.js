@@ -35,11 +35,7 @@ export function ProductList({ search }) {
     if (!search) {
       return <div>Start your search!</div>;
     } else {
-      return (
-        <div>
-          <Loading />
-        </div>
-      );
+      return <div>로딩컴포넌트</div>;
     }
   }
 
