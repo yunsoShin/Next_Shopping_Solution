@@ -4,7 +4,7 @@ import {
   DataProcessingMinPrice,
 } from "../../utils/dataProcessing";
 
-export function UpdateURL(keyword, pageindex) {
+function UpdateURL(keyword, pageindex) {
   const url = `https://search.shopping.naver.com/search/all?origQuery=${keyword}
   &pagingIndex=${pageindex}
   &pagingSize=80&productSet=total&query=${keyword}
@@ -30,6 +30,20 @@ async function PageScroll(page) {
   });
 }
 
+async function getElementsText(page, itemClass) {
+  const elements = await page.evaluate((itemClass) => {
+    const elements = Array.from(
+      document.querySelectorAll(`[class^="${itemClass}"]`)
+    );
+    return elements.map((element) => element.innerText);
+  }, itemClass);
+
+  return elements;
+}
+
+// '[class^="product_title__"]',
+//'[class^="basicList_title__"]'
+
 export default async (req, res) => {
   const keyword = req.query.id;
   const pageIndex = Number(req.query.pageIndex || 1);
@@ -40,18 +54,11 @@ export default async (req, res) => {
   await page.goto(url, { waitUntil: "networkidle0" });
 
   // Scroll to the bottom of the page
-  PageScroll(page);
+  await PageScroll(page);
+
   const [elementsName, elementsPrice, elementsMinPrice, elementsLink] =
     await Promise.all([
-      page.evaluate(() => {
-        const Name = Array.from(
-          document.querySelectorAll(
-            '[class^="product_title__"]',
-            '[class^="basicList_title__"]'
-          )
-        ).map((element) => element.innerText);
-        return Name;
-      }),
+      getElementsText(page, "product_title__"),
       page.evaluate(() => {
         const Price = Array.from(
           document.querySelectorAll(
