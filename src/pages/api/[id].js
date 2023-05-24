@@ -12,16 +12,7 @@ export function UpdateURL(keyword, pageindex) {
   return url;
 }
 
-export default async (req, res) => {
-  const keyword = req.query.id;
-  const pageIndex = Number(req.query.pageIndex || 1);
-  const url = UpdateURL(keyword, pageIndex);
-  const browser = await puppeteer.launch({ headless: "new" });
-  const page = await browser.newPage();
-
-  await page.goto(url, { waitUntil: "networkidle0" });
-
-  // Scroll to the bottom of the page
+async function PageScroll() {
   await page.evaluate(async () => {
     await new Promise((resolve, reject) => {
       let totalHeight = 0;
@@ -37,6 +28,19 @@ export default async (req, res) => {
       }, 100);
     });
   });
+}
+
+export default async (req, res) => {
+  const keyword = req.query.id;
+  const pageIndex = Number(req.query.pageIndex || 1);
+  const url = UpdateURL(keyword, pageIndex);
+  const browser = await puppeteer.launch({ headless: "new" });
+  const page = await browser.newPage();
+
+  await page.goto(url, { waitUntil: "networkidle0" });
+
+  // Scroll to the bottom of the page
+  PageScroll();
 
   const [elementsName, elementsPrice, elementsMinPrice, elementsLink] =
     await Promise.all([
