@@ -29,24 +29,17 @@ const ItemProfit = styled.p`
 export function ProductItem({ item }) {
   return (
     <ItemContainer>
-      <ItemLink href={item.Link} target="_blank" rel="noopener noreferrer">
+      <ItemLink href={item.link} target="_blank" rel="noopener noreferrer">
         <ItemName>{item.name}</ItemName>
       </ItemLink>
       <div>
-        {item.mallPrice.map(([shop, price]) => (
+        <ItemPrice>Min Price: {item.minPrice}원</ItemPrice>
+        {item.price.map(({ shop, price }) => (
           <ItemPrice key={shop}>
-            {" "}
-            {shop}:{price} 원
+            {shop}: {price} 원
           </ItemPrice>
         ))}
       </div>
-      <ItemPrice>Min Price: {item.MinPrice}원</ItemPrice>
-      {item.ItemProfit.map(([shop, profit], index) => (
-        <ItemProfit key={shop}>
-          {" "}
-          {shop}:{profit}원 {item.ItemProfitPer[index][1]}%⬆️
-        </ItemProfit>
-      ))}
     </ItemContainer>
   );
 }

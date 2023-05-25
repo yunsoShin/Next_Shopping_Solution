@@ -49,147 +49,28 @@ export default async (req, res) => {
   const keyword = req.query.id;
   const pageIndex = Number(req.query.pageIndex || 1);
   const url = UpdateURL(keyword, pageIndex);
-  const browser = await puppeteer.launch({ headless: true }); // 수정: headless 옵션을 true로 변경
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-
   await page.goto(url, { waitUntil: "networkidle0" });
-
-  // Scroll to the bottom of the page
   await PageScroll(page);
   const productArr = await PageCrawling(page, "product_item__");
   await browser.close();
-  const productDetail = productArr.map((item) => item.text);
-  const productLink = productArr.map((item) => item.href);
-  const productName = productDetail.map((item) => ProductDetailName(item));
-  const productPrice = productDetail.map((item) => ProductPrice(item));
 
-  // Send JSON response
-  //const productName = productArr.map((item) => ProductDetail(item));
-  //const productOne = ProductDetail(productArr[1]);
-  res.status(200).json(productPrice[1]);
-};
-
-{
-  /* 
-export default async (req, res) => {
-  const keyword = req.query.id;
-  const pageIndex = Number(req.query.pageIndex || 1);
-  const url = UpdateURL(keyword, pageIndex);
-  const browser = await puppeteer.launch({ headless: "new" });
-  const page = await browser.newPage();
-
-  await page.goto(url, { waitUntil: "networkidle0" });
-
-  // Scroll to the bottom of the page
-  await PageScroll(page);
-
-  const [elementsName, elementsPrice, elementsMinPrice, elementsLink] =
-    await Promise.all([
-      page.evaluate(() => {
-        const Name = Array.from(
-          document.querySelectorAll(
-            '[class^="adProduct_title__"]',
-            '[class^="product_title__"]',
-            '[class^="basicList_title__"]'
-          )
-        ).map((element) => element.innerText);
-        return Name;
-      }),
-      page.evaluate(() => {
-        const Price = Array.from(
-          document.querySelectorAll('[class^="product_mall_area___"]')
-        ).map((element) => element.innerText);
-        return Price;
-      }),
-      page.evaluate(() => {
-        const minPrice = Array.from(
-          document.querySelectorAll('[class^="price_num__"]')
-        ).map((element) => element.innerText);
-        return minPrice;
-      }),
-      page.evaluate(() => {
-        const productLink = Array.from(
-          document.querySelectorAll('[class^="product_link__"]')
-        ).map((element) => element.href);
-        return productLink;
-      }),
-
-      //adProduct_link__NYTV9 linkAnchor
-    ]);
-  console.log(elementsMinPrice);
-  const result = elementsName.reduce((acc, name, index) => {
-    const MallPrice = DataProcessingMallPrice(elementsPrice[index]);
-    const MinPrice = DataProcessingMinPrice(elementsMinPrice[index]);
-    const FilteredPrices = Object.entries(MallPrice).filter(([shop, price]) => {
-      return MinPrice * 1.2 + 3000 < price;
-    });
-
-    if (FilteredPrices.length > 0) {
-      acc.push({
-        name: name,
-        mallPrice: FilteredPrices,
-        MinPrice: MinPrice,
-        Link: elementsLink[index],
-        ItemProfit: FilteredPrices.map(([shop, price]) => [
-          shop,
-          price - MinPrice - price * 0.1,
-        ]),
-        ItemProfitPer: FilteredPrices.map(([shop, price]) => [
-          shop,
-          Math.floor(((price - MinPrice - price * 0.1) / price) * 100),
-        ]),
-      });
-    }
-
-    return acc;
-  }, []);
-  await browser.close();
-  // Send JSON response
-  res.status(200).json(result);
-};
-
-*/
-}
-
-{
-  /* cheerio를 통한 크롤링
-import  cheerio  from 'cheerio';
-import axios from 'axios';
-
-export function UpdateURL(keyword){
-  const url=`https://search.shopping.naver.com/search/all?origQuery=${keyword}
-  &pagingIndex=1
-  &pagingSize=40&productSet=total&query=${keyword}
-  &sort=rel&timestamp=&viewType=list​`
-  return url;
-}
-
-export default async (req, res) => {
-  const keyword = req.query.id;
-  const url = UpdateURL(keyword);
-  const {data} = await axios.get(url);
-
-  const $ = cheerio.load(data);
-
-  const elementsName = $('[class^="basicList_title__"]').map((index, element) => $(element).text()).get();
-  const elementsPrice = $('[class^="basicList_mall_area__"]').map((index, element) => $(element).text()).get();
-  const elementsMinPrice = $('[class^="price_price__"]').map((index, element) => $(element).text()).get();
-  const elementsLink = $('[class^="thumbnail_thumb__"]').map((index, element) => $(element).attr('href')).get();
-
-  const result = elementsName.map((name, index) => {
-    const MallPrice = DataProcessingMallPrice(elementsPrice[index]);
-    const MinPrice = DataProcessingMinPrice(elementsMinPrice[index]);
+  const response = productArr.map((item) => {
+    const detail = item.text;
+    const link = item.href;
+    const name = ProductDetailName(detail);
+    const price = DataProcessingMallPrice(ProductPrice(detail));
+    const minPrice = DataProcessingMinPrice(ProductPrice(detail));
 
     return {
+      detail: detail,
+      link: link,
       name: name,
-      mallPrice: MallPrice,
-      MinPrice: MinPrice,
-      Link: elementsLink[index]
+      price: price,
+      minPrice: minPrice,
     };
   });
 
-  res.status(200).json(result);
+  res.status(200).json(response);
 };
-
-*/
-}
