@@ -2,6 +2,13 @@ import useSWR from "swr";
 import { useState, useEffect } from "react";
 import { ProductItem } from "./productItem";
 import Loading from "./loading";
+import styled from "styled-components";
+
+const StyledPageButton = styled.button`
+  padding: 5px 10px;
+  font-size: 14px;
+  width: 150px;
+`;
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -47,8 +54,8 @@ export function ProductList({ search }) {
       {data.map((item, index) => (
         <ProductItem key={index} item={item} />
       ))}
-      <button onClick={handlePrevBTN}>테스트용 이전페이지 버튼</button>
-      <button onClick={handleNextBTN}>테스트용 다음페이지 버튼</button>
+      <StyledPageButton onClick={handlePrevBTN}>이전페이지</StyledPageButton>
+      <StyledPageButton onClick={handleNextBTN}>다음페이지</StyledPageButton>
     </div>
   );
 }

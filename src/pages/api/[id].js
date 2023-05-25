@@ -5,12 +5,13 @@ import {
   ProductDetailName,
   ProductPrice,
   getProductDetails,
+  ProfitProduct,
 } from "../../utils/dataProcessing";
 
 function UpdateURL(keyword, pageIndex) {
   const url = `https://search.shopping.naver.com/search/all?origQuery=${keyword}
   &pagingIndex=${pageIndex}
-  &pagingSize=20&productSet=total&query=${keyword}
+  &pagingSize=80&productSet=total&query=${keyword}
   &sort=rel&timestamp=&viewType=list​`;
   return url;
 }
@@ -56,21 +57,27 @@ export default async (req, res) => {
   const productArr = await PageCrawling(page, "product_item__");
   await browser.close();
 
-  const response = productArr.map((item) => {
-    const detail = item.text;
-    const link = item.href;
-    const name = ProductDetailName(detail);
-    const price = DataProcessingMallPrice(ProductPrice(detail));
-    const minPrice = DataProcessingMinPrice(detail);
+  const response = productArr
+    .filter((item) => {
+      const price = DataProcessingMallPrice(ProductPrice(item.text));
+      const minPrice = DataProcessingMinPrice(item.text);
+      return price.some(({ shop, price }) => price > minPrice * 1.2);
+    })
+    .map((item) => {
+      const detail = item.text;
+      const link = item.href;
+      const price = DataProcessingMallPrice(ProductPrice(detail));
+      const minPrice = DataProcessingMinPrice(detail);
+      const name = ProductDetailName(detail);
 
-    return {
-      detail: detail,
-      link: link,
-      name: name,
-      price: price,
-      minPrice: minPrice,
-    };
-  });
+      return {
+        detail: detail,
+        link: link,
+        name: name,
+        price: price,
+        minPrice: minPrice,
+      };
+    });
 
   res.status(200).json(response);
 };

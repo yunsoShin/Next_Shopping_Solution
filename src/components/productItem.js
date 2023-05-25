@@ -36,7 +36,7 @@ export function ProductItem({ item }) {
         <ItemPrice>Min Price: {item.minPrice}원</ItemPrice>
         {item.price.map(({ shop, price }) => (
           <ItemPrice key={shop}>
-            {shop}: {price} 원
+            {shop}: {price}원
           </ItemPrice>
         ))}
       </div>

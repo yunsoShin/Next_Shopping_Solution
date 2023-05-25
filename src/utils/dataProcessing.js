@@ -21,10 +21,13 @@ export function DataProcessingMallPrice(textArr) {
 
 export function DataProcessingMinPrice(textArr) {
   //최저102000원판매처17
-  let minPrice = productDetail(textArr);
-  minPrice = minPrice[2];
-  minPrice = minPrice.split("원");
-  return minPrice[0];
+  let productDetails = productDetail(textArr);
+  let Prices = productDetails[2];
+  Prices = Prices.split("원");
+
+  minPrice = Prices[0].replace(/,/g, "").replace(/[^0-9]/g, "");
+
+  return minPrices;
 }
 
 export function productDetail(text) {
