@@ -49,7 +49,7 @@ export default async (req, res) => {
   const keyword = req.query.id;
   const pageIndex = Number(req.query.pageIndex || 1);
   const url = UpdateURL(keyword, pageIndex);
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle0" });
   await PageScroll(page);
@@ -61,7 +61,7 @@ export default async (req, res) => {
     const link = item.href;
     const name = ProductDetailName(detail);
     const price = DataProcessingMallPrice(ProductPrice(detail));
-    const minPrice = DataProcessingMinPrice(ProductPrice(detail));
+    const minPrice = DataProcessingMinPrice(detail);
 
     return {
       detail: detail,

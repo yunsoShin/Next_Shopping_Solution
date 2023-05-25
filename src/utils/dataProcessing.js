@@ -18,30 +18,24 @@ export function DataProcessingMallPrice(textArr) {
   }
   return shopPrice;
 }
+
 export function DataProcessingMinPrice(textArr) {
-  let lowestPrice = null;
-
-  for (let i = 0; i < textArr.length; i++) {
-    let priceString = textArr[i];
-    if (priceString) {
-      // Replace any non-numeric and non-comma character
-      priceString = priceString.replace(/[^0-9,]/g, "");
-      // Then replace comma, if any
-      const price = priceString.replace(/,/g, "");
-      if (!isNaN(parseFloat(price))) {
-        lowestPrice = parseInt(price, 10);
-        break;
-      }
-    }
-  }
-
-  return lowestPrice;
+  //최저102000원판매처17
+  let minPrice = productDetail(textArr);
+  minPrice = minPrice[2];
+  minPrice = minPrice.split("원");
+  return minPrice[0];
 }
 
-export function ProductDetailName(text) {
+export function productDetail(text) {
   let word = text.split("\t");
   word = word[1];
   word = word.split("\n");
+  return word;
+}
+
+export function ProductDetailName(text) {
+  let word = productDetail(text);
   word = word[1];
   return word;
 }
