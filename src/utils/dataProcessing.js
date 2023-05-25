@@ -1,4 +1,4 @@
-export const DataProcessingMallPrice = (text) => {
+export function DataProcessingMallPrice(text) {
   let allowedShops = ["쿠팡", "G마켓", "11번가", "옥션", "SSG닷컴"];
   let words = text.split("\n");
   let shopPrice = {};
@@ -14,9 +14,9 @@ export const DataProcessingMallPrice = (text) => {
   }
 
   return shopPrice;
-};
+}
 
-export const DataProcessingMinPrice = (text) => {
+export function DataProcessingMinPrice(text) {
   if (!text) {
     return null; // or return a different default value if needed
   }
@@ -25,4 +25,19 @@ export const DataProcessingMinPrice = (text) => {
   MinPrice = parseInt(MinPrice, 10);
 
   return MinPrice;
-};
+}
+
+export function ProductDetailName(text) {
+  let word = text.split("\t");
+  word = word[1];
+  word = word.split("\n");
+  word = word[1];
+  return word;
+}
+
+export function ProductPrice(text) {
+  let word = text.split("\t");
+  word = word[2];
+  word = word.split("\n");
+  return word;
+}

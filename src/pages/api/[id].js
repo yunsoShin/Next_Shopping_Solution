@@ -2,12 +2,15 @@ import puppeteer from "puppeteer";
 import {
   DataProcessingMallPrice,
   DataProcessingMinPrice,
+  ProductDetailName,
+  ProductPrice,
+  getProductDetails,
 } from "../../utils/dataProcessing";
 
 function UpdateURL(keyword, pageIndex) {
   const url = `https://search.shopping.naver.com/search/all?origQuery=${keyword}
   &pagingIndex=${pageIndex}
-  &pagingSize=80&productSet=total&query=${keyword}
+  &pagingSize=20&productSet=total&query=${keyword}
   &sort=rel&timestamp=&viewType=list​`;
   return url;
 }
@@ -30,14 +33,16 @@ async function PageScroll(page) {
   });
 }
 async function PageCrawling(page, productClass) {
-  // 'return' keyword is added to return the result of page.evaluate
   return await page.evaluate((productClass) => {
     const productElements = Array.from(
       document.querySelectorAll(`[class^="${productClass}"]`)
     );
-    const productTexts = productElements.map((element) => element.innerText);
-    return productTexts;
-  }, productClass); // Here 'product' is replaced by 'productClass' as the parameter passed to the function
+    const productData = productElements.map((element) => ({
+      text: element.innerText,
+      href: element.querySelector("a")?.href,
+    }));
+    return productData;
+  }, productClass);
 }
 
 export default async (req, res) => {
@@ -51,10 +56,17 @@ export default async (req, res) => {
 
   // Scroll to the bottom of the page
   await PageScroll(page);
-  const productElement = await PageCrawling(page, "product_item__");
+  const productArr = await PageCrawling(page, "product_item__");
   await browser.close();
+  const productDetail = productArr.map((item) => item.text);
+  const productLink = productArr.map((item) => item.href);
+  const productName = productDetail.map((item) => ProductDetailName(item));
+  const productPrice = productDetail.map((item) => ProductPrice(item));
+
   // Send JSON response
-  res.status(200).json(productElement);
+  //const productName = productArr.map((item) => ProductDetail(item));
+  //const productOne = ProductDetail(productArr[1]);
+  res.status(200).json(productPrice[1]);
 };
 
 {
