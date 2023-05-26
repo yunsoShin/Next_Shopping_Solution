@@ -24,10 +24,9 @@ export function DataProcessingMinPrice(textArr) {
   let productDetails = productDetail(textArr);
   let Prices = productDetails[2];
   Prices = Prices.split("원");
+  Prices = Prices[0].replace(/,/g, "").replace(/[^0-9]/g, "");
 
-  minPrice = Prices[0].replace(/,/g, "").replace(/[^0-9]/g, "");
-
-  return minPrices;
+  return Prices;
 }
 
 export function productDetail(text) {
@@ -48,4 +47,21 @@ export function ProductPrice(text) {
   word = word[2];
   word = word.split("\n");
   return word;
+}
+
+export function ProfitProduct(minPrice, price) {
+  const filteredPrices = Object.entries(price).filter(([shop, price]) => {
+    return (minPrice + 3000) * 1.2 < price;
+  });
+
+  let profitablePrice = {};
+
+  if (filteredPrices.length > 0) {
+    for (let i = 0; i < filteredPrices.length; i++) {
+      const [shop, price] = filteredPrices[i];
+      profitablePrice[shop] = price;
+    }
+  }
+
+  return profitablePrice;
 }
