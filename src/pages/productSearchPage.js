@@ -8,13 +8,13 @@ export default function ProductSearchPage({ initialSearch }) {
   return (
     <div>
       <SearchForm onSubmit={setSearch} />
-      {Array.isArray(search) && <ProductList search={search} />}
+      <ProductList search={search} />
     </div>
   );
 }
 
 export async function getServerSideProps() {
-  const initialSearch = "";
+  const initialSearch = [];
 
   return {
     props: {

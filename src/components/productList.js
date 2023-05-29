@@ -48,7 +48,9 @@ export function ProductList({ search }) {
       ); // Show loading message
     }
   }
-
+  if (data) {
+    console.log(data);
+  }
   return (
     <div>
       {data.map((item, index) => (
