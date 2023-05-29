@@ -4,8 +4,6 @@ import {
   DataProcessingMinPrice,
   ProductDetailName,
   ProductPrice,
-  getProductDetails,
-  ProfitProduct,
 } from "../../utils/dataProcessing";
 
 const UpdateURL = (keyword, pageIndex) => {

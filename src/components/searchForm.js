@@ -31,7 +31,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #45a049;
+    transform: scale(108%);
   }
 `;
 
