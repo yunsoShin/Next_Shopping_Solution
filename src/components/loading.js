@@ -12,7 +12,7 @@ const StyledLottie = styled(Lottie)`
   transform: translate(-50%, -50%); // 이 부분을 추가하세요.
 `;
 
-function Loading(props) {
+function Loading() {
   return <StyledLottie loop animationData={LoadingJson} play />;
 }
 
