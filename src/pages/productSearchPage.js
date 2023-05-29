@@ -8,7 +8,7 @@ export default function ProductSearchPage({ initialSearch }) {
   return (
     <div>
       <SearchForm onSubmit={setSearch} />
-      <ProductList search={search} />
+      {Array.isArray(search) && <ProductList search={search} />}
     </div>
   );
 }
