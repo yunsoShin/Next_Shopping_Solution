@@ -19,7 +19,6 @@
     "puppeteer": "^20.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-lottie": "^1.2.3",
     "react-lottie-player": "^1.5.4",
     "request": "^2.88.2",
     "require": "^0.4.4",
