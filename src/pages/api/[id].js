@@ -71,11 +71,18 @@ const crawlData = async (req, res) => {
 
     const browser = await puppeteer.launch({
       headless: false,
-      args: ["--window-size=1920,1080", "disable-notifications"],
     });
 
     const page = await browser.newPage();
-    await page.setViewport({ width: 1920, height: 1080 }); // 원하는 해상도로 설정
+    await page.setRequestInterception(true);
+    page.on("request", (request) => {
+      if (["image", "font"].indexOf(request.resourceType()) !== -1) {
+        request.abort();
+      } else {
+        request.continue();
+      }
+    });
+    await page.setViewport({ width: 2580, height: 1440 }); // 원하는 해상도로 설정
 
     await page.goto(url, { waitUntil: "networkidle0" });
     await PageScroll(page);
