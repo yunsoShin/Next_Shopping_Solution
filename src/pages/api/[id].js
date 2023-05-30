@@ -26,10 +26,12 @@ const PageScroll = async (page) => {
         if (totalHeight >= scrollHeight) {
           clearInterval(timer);
           resolve();
+          console.log("scroll");
         }
       }, 100);
     });
   });
+  console.log("scroll");
 };
 
 const PageCrawling = async (page, productClass) => {
@@ -67,8 +69,7 @@ const crawlData = async (req, res) => {
     const pageIndex = isNaN(req.query.pageIndex)
       ? 1
       : Number(req.query.pageIndex);
-    const url =
-      "https://search.shopping.naver.com/search/all?frm=NVSCTAB&origQuery=%EB%AC%B4%EB%93%9C%EB%93%B1&pagingIndex=2&pagingSize=40&productSet=total&query=%EB%AC%B4%EB%93%9C%EB%93%B1&sort=rel&timestamp=&viewType=list";
+    const url = UpdateURL(keyword, pageIndex);
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
