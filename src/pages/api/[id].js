@@ -85,7 +85,9 @@ const crawlData = async (req, res) => {
         })
         .map(getResponseData)
     );
-
+    console.log(responses);
+    console.log(typeof responses);
+    console.log(Array.isArray(responses));
     res.status(200).json(responses);
   } catch (error) {
     console.error(error);

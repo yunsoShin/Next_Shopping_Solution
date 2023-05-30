@@ -10,7 +10,14 @@ const StyledPageButton = styled.button`
   width: 150px;
 `;
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`An error occurred: ${res.status}`);
+  }
+  const data = await res.json();
+  return data;
+};
 
 export function ProductList({ search }) {
   const [pageIndex, setPageIndex] = useState(1);
