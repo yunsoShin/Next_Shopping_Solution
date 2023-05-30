@@ -26,12 +26,10 @@ const PageScroll = async (page) => {
         if (totalHeight >= scrollHeight) {
           clearInterval(timer);
           resolve();
-          console.log("scroll");
         }
-      }, 100);
+      }, 5);
     });
   });
-  console.log("scroll");
 };
 
 const PageCrawling = async (page, productClass) => {
@@ -71,12 +69,17 @@ const crawlData = async (req, res) => {
       : Number(req.query.pageIndex);
     const url = UpdateURL(keyword, pageIndex);
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: false,
+      args: ["--window-size=1920,1080", "disable-notifications"],
+    });
+
     const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 }); // 원하는 해상도로 설정
+
     await page.goto(url, { waitUntil: "networkidle0" });
     await PageScroll(page);
     const products = await PageCrawling(page, "product_item__");
-    await browser.close();
 
     const responses = await Promise.all(
       products
@@ -87,9 +90,6 @@ const crawlData = async (req, res) => {
         })
         .map(getResponseData)
     );
-    console.log(responses);
-    console.log(typeof responses);
-    console.log(Array.isArray(responses));
     res.status(200).json(responses);
   } catch (error) {
     console.error(error);
