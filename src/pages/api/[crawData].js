@@ -63,15 +63,13 @@ const getResponseData = async (item) => {
 
 const crawlData = async (req, res) => {
   try {
-    const keyword = req.query.id;
+    const keyword = req.query.crawData;
     const pageIndex = isNaN(req.query.pageIndex)
       ? 1
       : Number(req.query.pageIndex);
     const url = UpdateURL(keyword, pageIndex);
 
-    const browser = await puppeteer.launch({
-      headless: false,
-    });
+    const browser = await puppeteer.launch();
 
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -82,7 +80,7 @@ const crawlData = async (req, res) => {
         request.continue();
       }
     });
-    await page.setViewport({ width: 2580, height: 1440 }); // 원하는 해상도로 설정
+    await page.setViewport({ width: 1920, height: 1440 }); // 원하는 해상도로 설정
 
     await page.goto(url, { waitUntil: "networkidle0" });
     await PageScroll(page);
