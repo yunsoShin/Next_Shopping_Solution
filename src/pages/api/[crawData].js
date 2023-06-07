@@ -11,7 +11,8 @@ const UpdateURL = (keyword, pageIndex) => {
   &pagingIndex=${pageIndex}
   &pagingSize=80&productSet=total&query=${keyword}
   &sort=rel&timestamp=&viewType=list​`;
-  return url;
+  const enc = encodeURI(url);
+  return enc;
 };
 
 const PageScroll = async (page) => {
