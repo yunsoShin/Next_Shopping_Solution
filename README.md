@@ -13,6 +13,8 @@
 ##구동예시
 ![화면 기록 2023-06-15 오후 12 12 18](https://github.com/yunsoShin/Next_Shopping_Solution/assets/91814941/49254a22-a57a-4b0d-831f-f5c917ea42af)
 
+최저가 8만원의 킥보드가 G마켓에서는 20만원에 팔리고있었습니다.
+
 
 ## 주의 사항
 
