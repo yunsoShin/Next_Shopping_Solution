@@ -19,7 +19,7 @@ const PageScroll = async (page) => {
   await page.evaluate(async () => {
     await new Promise((resolve, reject) => {
       let totalHeight = 0;
-      const distance = 100;
+      const distance = 50;
       const timer = setInterval(() => {
         const scrollHeight = document.body.scrollHeight;
         window.scrollBy(0, distance);
@@ -70,7 +70,8 @@ const crawlData = async (req, res) => {
       : Number(req.query.pageIndex);
     const url = UpdateURL(keyword, pageIndex);
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false }); // headless 모드를 비활성화
+
 
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -81,7 +82,7 @@ const crawlData = async (req, res) => {
         request.continue();
       }
     });
-    await page.setViewport({ width: 1920, height: 5040 }); // 원하는 해상도로 설정
+    await page.setViewport({ width: 1920, height: 1080 }); // 원하는 해상도로 설정
 
     await page.goto(url, { waitUntil: "networkidle0" });
     await PageScroll(page);
