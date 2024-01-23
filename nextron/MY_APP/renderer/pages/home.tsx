@@ -23,7 +23,7 @@ export default function HomePage() {
         <span>셀러들을 위한 소싱 채굴기</span>
       </div>
       <div className="mt-1 w-full flex-wrap flex justify-center">
-        <Link href="/next">
+        <Link href="/productSearchPage">
           <a className="btn-blue">Solution of the Sellers, by the Sellers, for the Sellers</a>
         </Link>
       </div>
