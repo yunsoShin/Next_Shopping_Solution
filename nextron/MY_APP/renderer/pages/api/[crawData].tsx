@@ -14,7 +14,7 @@ const UpdateURL = (keyword, pageIndex) => {
   const enc = encodeURI(url);
   return enc;
 };
-
+//
 const PageScroll = async (page) => {
   await page.evaluate(async () => {
     await new Promise<void>((resolve, reject) => {
