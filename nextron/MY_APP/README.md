@@ -3,7 +3,7 @@
 ## Usage
 
 ### Create an App
-
+//start nexton
 ```
 # with npx
 $ npx create-nextron-app my-app --example with-tailwindcss
