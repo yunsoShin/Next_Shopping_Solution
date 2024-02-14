@@ -73,7 +73,7 @@ const crawlData = async (req, res) => {
       : Number(req.query.pageIndex);
     const url = UpdateURL(keyword, pageIndex);
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
 
     const page = await browser.newPage();
     await page.setRequestInterception(true);
