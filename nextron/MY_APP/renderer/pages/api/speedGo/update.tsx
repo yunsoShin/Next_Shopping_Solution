@@ -26,7 +26,7 @@ const updateSpeedGo = async (req, res) => {
 
     // 페이지 내에서 네트워크 요청이나 다른 페이지 로딩이 완료될 때까지 기다림 (예: 로그인 페이지로의 리다이렉트)
     await page.waitForNavigation();
-
+    //추가로 , 환경변수로 설정한 로그인 비밀번호 작성하는 코드를 실행하고 , 로그인 한 이후에는 업데이트 실행
     // 두 번째 네이버 로그인 링크 클릭
     await page.evaluate(() => {
       const naverLoginLink = document.querySelector("#lSnsLinkNaver a");
