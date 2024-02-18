@@ -1,5 +1,17 @@
 import puppeteer from "puppeteer";
 
+const fillLoginId = async () => {
+  // 로그인 아이디 입력란을 id 속성으로 찾습니다.
+  var loginIdInput = document.getElementById("id");
+
+  // 로그인 아이디 입력란의 값을 설정합니다.
+  if (loginIdInput) {
+    // @ts-ignore
+    loginIdInput.value = "qwaszx5053";
+  } else {
+    console.log("로그인 아이디 입력란을 찾을 수 없습니다.");
+  }
+};
 const updateSpeedGo = async (req, res) => {
   try {
     const url = "https://speedgo.domeggook.com/";
@@ -37,6 +49,11 @@ const updateSpeedGo = async (req, res) => {
         console.error("Naver login link not found");
       }
     });
+    await page.waitForNavigation();
+
+    const loginId = ""; // 입력할 아이디 값
+    await page.type("#id", loginId); // 아이디 입력 필드에 값을 타이핑합니다.
+    // await fillLoginId();
 
     // 페이지 내에서 네트워크 요청이나 다른 페이지 로딩이 완료될 때까지 기다림 (예: 로그인 페이지로의 리다이렉트)
 
