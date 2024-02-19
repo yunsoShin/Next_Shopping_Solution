@@ -55,7 +55,19 @@ const updateSpeedGo = async (req, res) => {
     const loginPw = ""; // 입력할 비밀번호 값
 
     await page.type("#id", loginId); // 아이디 입력 필드에 값을 타이핑합니다.
-    await page.type("#pw", loginId); // 아이디 입력 필드에 값을 타이핑합니다.
+    // 비밀번호를 입력하는 함수를 비동기로 정의합니다.
+    const typePasswordWithRandomDelay = async (page, selector, password) => {
+      await page.click(selector); // 비밀번호 입력 필드를 클릭하여 포커스를 맞춥니다.
+      for (const char of password) {
+        await page.keyboard.press(char); // 각 문자를 개별적으로 입력합니다.
+        await page.waitForTimeout(Math.random() * 100 + 50); // 50ms에서 150ms 사이의 무작위 지연을 추가합니다.
+      }
+    };
+
+    // updateSpeedGo 함수 내에서 비밀번호 입력 부분을 수정합니다.
+    // 비밀번호 입력
+    await typePasswordWithRandomDelay(page, "#pw", ""); // 수정된 비밀번호 입력 함수를 호출합니다.
+
     // await fillLoginId();
 
     // 페이지 내에서 네트워크 요청이나 다른 페이지 로딩이 완료될 때까지 기다림 (예: 로그인 페이지로의 리다이렉트)
@@ -63,6 +75,15 @@ const updateSpeedGo = async (req, res) => {
     // 로그인 과정 완료 후 추가 작업...
     // 예: 로그인 후 페이지의 특정 요소가 로드될 때까지 기다림
     // await page.waitForSelector('selector_of_an_element_after_login');
+    await page.evaluate(() => {
+      const loginButton = document.querySelector("#log\\.login"); // CSS 선택자에서 특수문자를 이스케이프 처리
+      if (loginButton) {
+        // @ts-ignore
+        loginButton.click(); // 로그인 버튼 클릭
+      } else {
+        console.error("Login button not found");
+      }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
