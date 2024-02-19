@@ -52,7 +52,10 @@ const updateSpeedGo = async (req, res) => {
     await page.waitForNavigation();
 
     const loginId = ""; // 입력할 아이디 값
+    const loginPw = ""; // 입력할 비밀번호 값
+
     await page.type("#id", loginId); // 아이디 입력 필드에 값을 타이핑합니다.
+    await page.type("#pw", loginId); // 아이디 입력 필드에 값을 타이핑합니다.
     // await fillLoginId();
 
     // 페이지 내에서 네트워크 요청이나 다른 페이지 로딩이 완료될 때까지 기다림 (예: 로그인 페이지로의 리다이렉트)
