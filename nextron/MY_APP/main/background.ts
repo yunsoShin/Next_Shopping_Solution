@@ -27,10 +27,26 @@ if (isProd) {
     // await mainWindow.loadURL("https://speedgo.domeggook.com/");
   } else {
     const port = process.argv[2];
-    await mainWindow.loadURL(`http://localhost:${port}/home`);
-
+    // await mainWindow.loadURL(`http://localhost:${port}/home`);
+    await mainWindow.loadURL("https://speedgo.domeggook.com/");
     mainWindow.webContents.openDevTools();
   }
+  await mainWindow.webContents.executeJavaScript(`
+    const loginLink = document.querySelector('a.a1[href*="mem_formLogin.php"]');
+    if (loginLink) {
+      loginLink.click();
+    } else {
+      console.error('Login link not found');
+    }
+  `);
+  await mainWindow.webContents.executeJavaScript(`
+  const naverLoginLink = document.querySelector('#lSnsLinkNaver a');
+  if (naverLoginLink) {
+    naverLoginLink.click();
+  } else {
+    console.error('Naver login link not found');
+  }
+`);
 })();
 
 app.on("window-all-closed", () => {
