@@ -4,3 +4,4 @@ node_modules
 .next
 .next_module
 .next/
+.log
