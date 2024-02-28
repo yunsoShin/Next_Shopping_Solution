@@ -20,6 +20,7 @@ export function ProductList({ search }) {
     fetcher
   );
 
+  
   const handleNextBTN = () => {
     setPageIndex(pageIndex + 1);
   };
@@ -29,6 +30,9 @@ export function ProductList({ search }) {
     }
   }, [pageIndex, mutate, search]);
 
+
+
+  
   const handlePrevBTN = () => {
     if (pageIndex > 1) {
       setPageIndex(pageIndex - 1);
