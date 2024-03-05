@@ -20,7 +20,7 @@ export default function HomePage() {
           /> 
           {/* 해당이미지는 추후 로고 디자인 후 , 변경하도록합니다. */}
         </div>
-        <span>셀러들을 위한 소싱 채굴기</span>
+        <span>셀러들을 위한 소싱</span>
       </div>
       <div className="mt-1 w-full flex-wrap flex justify-center">
         <Link href="/productSearchPage">
