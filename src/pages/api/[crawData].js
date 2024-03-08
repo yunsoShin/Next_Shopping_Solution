@@ -81,8 +81,7 @@ const crawlData = async (req, res) => {
         request.continue();
       }
     });
-    await page.setViewport({ width: 1920, height: 5040 }); // 원하는 해상도로 설정 이제 필요없음
-
+    await page.setViewport({ width: 1920, height: 5040 }); //
     await page.goto(url, { waitUntil: "networkidle0" });
     await PageScroll(page);
     const products = await PageCrawling(page, "product_item__");
