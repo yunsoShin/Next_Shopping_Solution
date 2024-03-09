@@ -23,7 +23,7 @@ if (isProd) {
   });
 
   if (isProd) {
-    await mainWindow.loadURL("app://./home");
+    await mainWindow.loadURL("app://./home"); 
 
   } else {
     const port = process.argv[2];
