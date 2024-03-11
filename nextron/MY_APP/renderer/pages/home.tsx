@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function HomePage() {
   return (
-    <React.Fragment>
+    <React.Fragment> 
       <Head>
         <title>NSS test</title>
       </Head>
