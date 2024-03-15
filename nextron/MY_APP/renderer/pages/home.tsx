@@ -18,7 +18,7 @@ export default function HomePage() {
             width="256px"
             height="256px"
           /> 
-          {/* 해당이미지는 추후 로고 디자인 후 , 변경하도록합니다. */}
+          {/* 해당이미지는 추후 로고 디자인 후 , 변경하도록합니다. */} 
         </div>
         <span>셀러들을 위한 소싱</span>
       </div>
