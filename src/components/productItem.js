@@ -10,7 +10,7 @@ const ItemLink = styled.a`
   text-decoration: none;
   color: #333;
 `;
-
+ 
 const ItemName = styled.p`
   font-weight: bold;
   margin-bottom: 10px;
