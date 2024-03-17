@@ -8,7 +8,7 @@ const StyledPageButton = styled.button`
   padding: 5px 10px;
   font-size: 14px;
   width: 150px;
-`;
+`; 
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
