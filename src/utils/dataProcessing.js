@@ -1,7 +1,7 @@
 export function DataProcessingMallPrice(textArr) {
   let allowedShops = ["쿠팡", "G마켓", "11번가", "옥션", "SSG닷컴"];
   let shopPrice = [];
-
+ 
   for (let i = 0; i < textArr.length; i++) {
     if (allowedShops.includes(textArr[i])) {
       let priceString = textArr[i + 1];
