@@ -2,7 +2,7 @@ import React from "react";
 import Lottie from "react-lottie-player";
 import LoadingJson from "../../public/loadingAnimation.json";
 import styled from "styled-components"; // 이 부분을 추가하세요.
-
+ 
 const StyledLottie = styled(Lottie)`
   width: 200px;
   height: 200px;
