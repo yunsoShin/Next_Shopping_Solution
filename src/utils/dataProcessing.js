@@ -11,7 +11,7 @@ export function DataProcessingMallPrice(textArr) {
         // Then replace comma, if any
         const price = priceString.replace(/,/g, "");
         if (!isNaN(parseFloat(price))) {
-          shopPrice.push({ shop: textArr[i], price: parseInt(price, 10) });
+          shopPrice.push({ shop: textArr[i], price: parseInt(price, 10) }); 
         }
       }
     }
