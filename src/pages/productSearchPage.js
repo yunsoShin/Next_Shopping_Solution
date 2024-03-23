@@ -7,7 +7,7 @@ export default function ProductSearchPage({ initialSearch }) {
 
   return (
     <div>
-      <SearchForm onSubmit={setSearch} />
+      <SearchForm onSubmit={setSearch} /> 
       <ProductList search={search} />
     </div>
   );
