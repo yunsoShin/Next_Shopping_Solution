@@ -4,7 +4,7 @@ export function DataProcessingMallPrice(textArr) {
  
   for (let i = 0; i < textArr.length; i++) {
     if (allowedShops.includes(textArr[i])) {
-      let priceString = textArr[i + 1];
+      let priceString = textArr[i + 1]; 
       if (priceString) {
         // Replace any non-numeric and non-comma character
         priceString = priceString.replace(/[^0-9,]/g, "");
