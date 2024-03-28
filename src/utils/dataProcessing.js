@@ -17,7 +17,7 @@ export function DataProcessingMallPrice(textArr) {
     }
   }
   return shopPrice;
-}
+} 
 
 export function DataProcessingMinPrice(textArr) {
   //최저102000원판매처17
